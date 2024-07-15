@@ -1,0 +1,10 @@
+[package]
+name = "ir-remote"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.86"
+promptuity = "0.0.5"
+rppal = "0.18.0"
+spin_sleep = "1.2.0"
