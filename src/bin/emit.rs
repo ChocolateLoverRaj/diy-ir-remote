@@ -1,4 +1,4 @@
-use events::Remote;
+use ir_remote::Remote;
 use promptuity::{
     prompts::{Select, SelectOption},
     themes::FancyTheme,
@@ -11,8 +11,6 @@ const LED_PIN: u8 = 24;
 const CONSTANT_NUMBERS: [u8; 2] = [0, 255];
 
 const CARRIER_FREQUENCY: f64 = 38_000.0;
-
-mod events;
 
 fn main() -> anyhow::Result<()> {
     // I am using software PWM because hardware PWM wasn't showing up on NixOS.
