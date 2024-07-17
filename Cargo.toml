@@ -5,6 +5,8 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1.0.86"
+bitvec = "1.0.1"
+ordered_hash_map = "0.4.0"
 promptuity = "0.0.5"
 rppal = "0.18.0"
 simple-signal = "1.1.1"

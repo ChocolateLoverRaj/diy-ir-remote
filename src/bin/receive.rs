@@ -6,7 +6,7 @@ use std::{
     time::{Duration, SystemTime},
 };
 
-use ir_remote::Event;
+use ir_remote::ir_signal::{Event, IrSignal};
 use rppal::gpio::{Gpio, Level};
 use simple_signal::Signal;
 
@@ -31,30 +31,32 @@ fn main() -> anyhow::Result<()> {
         time: SystemTime,
     }
     let mut previous = None::<PreviousChange>;
+    let mut events = vec![];
     while running.load(Ordering::SeqCst) {
         if let Ok(Some(level)) = pin.poll_interrupt(false, Some(Duration::from_millis(50))) {
+            let level = !level;
             let now = SystemTime::now();
             let change = PreviousChange { level, time: now };
-            match previous {
-                Some(previous) => {
-                    if level == previous.level {
-                        continue;
-                    }
-                    let event = Event {
-                        level: previous.level,
-                        duration: now.duration_since(previous.time)?,
-                    };
-                    println!("{event:?}");
+            if let Some(previous) = previous {
+                if level == previous.level {
+                    continue;
                 }
-                None => {}
+                let event = Event {
+                    level: previous.level,
+                    duration: now.duration_since(previous.time)?,
+                };
+                // println!("{event:?}");
+                events.push(event);
             }
             previous = Some(change);
         }
     }
+    println!();
+    println!("{events:#?} {}", events.len());
     if let Some(previous) = previous {
-        println!();
         println!("Last level: {:?}", previous.level);
     }
 
+    println!("Decoded signal: {:#?}", IrSignal::decode(events.iter()));
     Ok(())
 }
