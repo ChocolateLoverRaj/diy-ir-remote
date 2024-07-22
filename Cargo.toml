@@ -2,10 +2,13 @@
 name = "ir-remote"
 version = "0.1.0"
 edition = "2021"
+repository = "https://github.com/ChocolateLoverRaj/diy-ir-remote"
 
 [dependencies]
-anyhow = "1.0.86"
 bitvec = "1.0.1"
+
+[dev-dependencies]
+anyhow = "1.0.86"
 ordered_hash_map = "0.4.0"
 promptuity = "0.0.5"
 rppal = "0.18.0"

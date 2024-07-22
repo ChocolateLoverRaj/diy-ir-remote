@@ -1,8 +1,6 @@
 use std::fmt::Debug;
 use std::time::Duration;
 
-use rppal::gpio::Level;
-
 use crate::is_around::IsAround;
 
 pub mod decode;
@@ -10,7 +8,7 @@ pub mod encode;
 
 #[derive(Debug, Clone, Copy)]
 pub struct Event {
-    pub level: Level,
+    pub is_on: bool,
     pub duration: Duration,
 }
 

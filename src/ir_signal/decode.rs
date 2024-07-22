@@ -2,7 +2,6 @@ use std::time::Duration;
 
 use bitvec::bitarr;
 use bitvec::prelude::*;
-use rppal::gpio::Level;
 
 use crate::are_all_equal::AreAllEqual;
 use crate::is_around::IsAround;
@@ -36,7 +35,7 @@ impl IrSignal {
             // Check for first two special events
             let signal_type = {
                 let first_high = events.next().ok_or(DecodeError::FirstHighMissing)?;
-                if first_high.level != Level::High {
+                if !first_high.is_on {
                     return Err(DecodeError::FirstHighBad);
                 }
 
@@ -44,7 +43,7 @@ impl IrSignal {
             }?;
             {
                 let first_low = events.next().ok_or(DecodeError::LengthBad)?;
-                if first_low.level != Level::Low {
+                if first_low.is_on {
                     return Err(DecodeError::FirstLowBad);
                 }
                 if !first_low.duration.is_around(
@@ -57,7 +56,7 @@ impl IrSignal {
 
             let consume_high = |events: &mut T| -> Result<(), DecodeError> {
                 let high = events.next().ok_or(DecodeError::LengthBad)?;
-                if high.level != Level::High {
+                if !high.is_on {
                     return Err(DecodeError::HighNotHigh);
                 }
                 if !high
@@ -74,7 +73,7 @@ impl IrSignal {
                 consume_high(events)?;
                 {
                     let low = events.next().ok_or(DecodeError::LengthBad)?;
-                    if low.level != Level::Low {
+                    if low.is_on {
                         return Err(DecodeError::LowNotLow);
                     }
                     let bit = match low.duration {
@@ -118,7 +117,7 @@ impl IrSignal {
         loop {
             match events.next() {
                 Some(event) => {
-                    if event.level != Level::Low {
+                    if event.is_on {
                         println!("{:#?}", event);
                         break Err(DecodeError::SpaceNotLow);
                     }
