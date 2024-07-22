@@ -1,8 +1,10 @@
 [package]
 name = "ir-remote"
+description = "Create a programatic IR remote to control devices"
 version = "0.1.0"
 edition = "2021"
 repository = "https://github.com/ChocolateLoverRaj/diy-ir-remote"
+license-file = "LICENSE"
 
 [dependencies]
 bitvec = "1.0.1"
