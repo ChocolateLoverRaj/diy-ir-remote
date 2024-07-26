@@ -13,6 +13,7 @@ pub struct Event {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum RemoteType {
     Generic,
     Samsung,
@@ -59,6 +60,7 @@ impl RemoteType {
 }
 
 #[derive(Debug, Clone, Copy)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Repeat {
     /// Total number of times to send the message
     pub times: usize,
@@ -66,6 +68,7 @@ pub struct Repeat {
 }
 
 #[derive(PartialEq, Eq, Clone, Copy)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct IrPacket {
     pub remote_type: RemoteType,
     pub receiver_id: u16,
@@ -79,6 +82,7 @@ impl Debug for IrPacket {
 }
 
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct IrSignal {
     pub packet: IrPacket,
     pub repeat: Option<Repeat>,

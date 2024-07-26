@@ -1,7 +1,7 @@
 [package]
 name = "ir-remote"
 description = "Create a programatic IR remote to control devices"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 repository = "https://github.com/ChocolateLoverRaj/diy-ir-remote"
 license-file = "LICENSE"
@@ -10,6 +10,7 @@ exclude = ["flake.nix", "flake.lock"]
 [dependencies]
 anyhow = "1.0.86"
 bitvec = "1.0.1"
+serde = { version = "1.0.204", optional = true, features = ["derive"] }
 
 [dev-dependencies]
 ordered_hash_map = "0.4.0"
@@ -17,3 +18,6 @@ promptuity = "0.0.5"
 rppal = "0.18.0"
 simple-signal = "1.1.1"
 spin_sleep = "1.2.0"
+
+[features]
+serde = ["dep:serde"]
